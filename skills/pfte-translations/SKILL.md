@@ -1,7 +1,7 @@
 ---
 name: pfte-translations
 description: 'Translate SharePoint pages and documents with PointFire Translator Express, check their translation status, and find the pages with missing or outdated translations, by driving the SharePoint site in a Chrome window. Use when asked to translate a SharePoint page, news post or document, list the languages of a SharePoint site, check whether translations are up to date, or refresh outdated translations, for example "translate https://contoso.sharepoint.com/sites/news/SitePages/Launch.aspx to French and German" or "which pages on the HR site have outdated translations?".'
-compatibility: 'Requires the Chrome DevTools MCP server (chrome-devtools-mcp), Google Chrome and Node.js on the machine of the user, and PointFire Translator Express on the SharePoint site. Setup per AI tool: https://github.com/IceFireStudios/pfte-translations'
+compatibility: 'Requires the Chrome DevTools MCP server (chrome-devtools-mcp), Google Chrome and Node.js on the machine of the user, and PointFire Translator Express on the SharePoint site. Setup per AI tool: https://github.com/IceFireStudios/pointfire-ai-skills'
 metadata:
   author: IceFire Studios
 ---
@@ -22,7 +22,7 @@ Input and result shapes: [references/tools.md](references/tools.md).
 
 You need the browser tools of a **Chrome DevTools MCP server** (`chrome-devtools-mcp`): `list_pages`, `new_page`, `select_page`, `navigate_page` and `evaluate_script`. The setup of this skill names that server `pointfire-browser`, but any chrome-devtools MCP server works. Each AI tool puts its own prefix in front of the tool names (for example `mcp__pointfire-browser__evaluate_script`); go by the last part. When your tools load on demand, search for `evaluate_script` first.
 
-When no such tools exist, stop. Tell the user the browser connection isn't set up, and point them to the setup instructions for their AI tool: https://github.com/IceFireStudios/pfte-translations#install
+When no such tools exist, stop. Tell the user the browser connection isn't set up, and point them to the setup instructions for their AI tool: https://github.com/IceFireStudios/pointfire-ai-skills#install
 
 You need a **SharePoint URL**. When the user gave none, ask for the site, page or document URL. Don't guess a tenant.
 
