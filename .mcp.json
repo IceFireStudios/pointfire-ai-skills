@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "pointfire-browser": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@1.10.1",
+        "--userDataDir=${CLAUDE_PLUGIN_DATA}/chrome-profile",
+        "--no-usage-statistics",
+        "--no-performance-crux",
+        "--categoryInput=false",
+        "--categoryEmulation=false",
+        "--categoryPerformance=false",
+        "--categoryNetwork=false",
+        "--fileNavigations=false"
+      ]
+    }
+  }
+}

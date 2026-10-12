@@ -1,0 +1,15 @@
+{
+  "name": "pointfire",
+  "description": "Agent plugins for PointFire Translator Express",
+  "owner": {
+    "name": "IceFire Studios",
+    "url": "https://pointfire.com"
+  },
+  "plugins": [
+    {
+      "name": "pfte-translations",
+      "source": "./",
+      "description": "Translate SharePoint pages and documents, and find missing or outdated translations, through PointFire Translator Express"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+name: Release
+
+# A `vX.Y.Z` tag publishes a GitHub release with the skill packages.
+# Running the workflow by hand builds and uploads the packages without releasing them.
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Validate the plugin, the marketplace and the skill
+        run: |
+          npm install --global @anthropic-ai/claude-code
+          claude plugin validate .
+          claude plugin validate ./skills
+
+      - name: Check the version
+        id: version
+        run: |
+          version=$(node -p "require('./.claude-plugin/plugin.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if [ "$GITHUB_REF_TYPE" = "tag" ] && [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "::error::The tag $GITHUB_REF_NAME doesn't match version $version in .claude-plugin/plugin.json"
+            exit 1
+          fi
+          if ! grep -q "^## \[$version\]" CHANGELOG.md; then
+            echo "::error::CHANGELOG.md has no section for version $version"
+            exit 1
+          fi
+
+      - name: Package the skill
+        run: ./scripts/package.sh
+
+      - uses: actions/upload-artifact@v6
+        with:
+          name: pfte-translations-${{ steps.version.outputs.version }}
+          path: dist/
+
+      - name: Create the release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          # The release notes are the CHANGELOG.md section of this version.
+          awk -v version="$VERSION" '
+            $0 ~ "^## \\[" version "\\]" { found = 1; next }
+            found && /^## \[/ { exit }
+            found { print }
+          ' CHANGELOG.md > release-notes.md
+          gh release create "$GITHUB_REF_NAME" dist/* \
+            --title "v$VERSION" \
+            --notes-file release-notes.md
