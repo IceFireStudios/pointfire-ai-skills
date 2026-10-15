@@ -27,6 +27,11 @@ jobs:
           claude plugin validate .
           claude plugin validate ./skills
 
+      - name: Check that `npx skills add` finds the skill
+        env:
+          DISABLE_TELEMETRY: '1'
+        run: npx -y skills@1.7.2 add . --list | grep pfte-translations
+
       - name: Check the version
         id: version
         run: |

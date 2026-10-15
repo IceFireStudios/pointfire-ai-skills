@@ -16,7 +16,7 @@ Which languages can I translate into on https://contoso.sharepoint.com/sites/new
 ```
 
 > [!NOTE]
-> This repository is private while we test it. You need read access to it to install or download anything below.
+> This repository is private while we test it. You need read access to it to install or download anything below. `npx skills add` uses the Git or GitHub CLI sign-in you already have.
 
 ## What is it
 
@@ -65,9 +65,17 @@ claude plugin install pfte-translations@pointfire
 
 Start a new Claude Code session, and ask a question like the ones at the top, or run `/pfte-translations:pfte-translations`.
 
+Use the plugin rather than `npx skills add` in Claude Code: the `skills` CLI installs only the skill, without the browser connection.
+
 ### OpenAI Codex
 
-1. Download `pfte-translations.zip` from the [latest release](https://github.com/IceFireStudios/pointfire-ai-skills/releases/latest), and unzip it into `~/.agents/skills/`, so you end up with `~/.agents/skills/pfte-translations/SKILL.md`.
+1. Install the skill into `~/.agents/skills/` with the [`skills` CLI](https://github.com/vercel-labs/skills):
+
+   ```bash
+   npx skills add IceFireStudios/pointfire-ai-skills --skill pfte-translations --agent codex --global
+   ```
+
+   Or download `pfte-translations.zip` from the [latest release](https://github.com/IceFireStudios/pointfire-ai-skills/releases/latest), and unzip it there yourself, so you end up with `~/.agents/skills/pfte-translations/SKILL.md`:
 
    ```bash
    gh release download --repo IceFireStudios/pointfire-ai-skills --pattern pfte-translations.zip --dir /tmp
@@ -84,7 +92,14 @@ Start a new Claude Code session, and ask a question like the ones at the top, or
 
 ### GitHub Copilot in VS Code
 
-1. Download `pfte-translations.zip` from the [latest release](https://github.com/IceFireStudios/pointfire-ai-skills/releases/latest), and unzip it into `~/.copilot/skills/`, so you end up with `~/.copilot/skills/pfte-translations/SKILL.md`.
+1. Install the skill into `~/.copilot/skills/` with the [`skills` CLI](https://github.com/vercel-labs/skills):
+
+   ```bash
+   npx skills add IceFireStudios/pointfire-ai-skills --skill pfte-translations --agent github-copilot --global
+   ```
+
+   Or download `pfte-translations.zip` from the [latest release](https://github.com/IceFireStudios/pointfire-ai-skills/releases/latest), and unzip it there yourself, so you end up with `~/.copilot/skills/pfte-translations/SKILL.md`.
+
 2. Run **MCP: Open User Configuration** from the Command Palette, and add the browser connection. Replace `<home>` with the full path of your home folder, for example `/Users/jane` or `C:/Users/jane`:
 
    ```json
@@ -114,7 +129,13 @@ Start a new Claude Code session, and ask a question like the ones at the top, or
 
 ### Other AI tools
 
-Any agent that reads Agent Skills and runs local MCP servers can use the package: put the `pfte-translations` folder from the zip in its skills folder, and add the browser connection with the command and arguments above. The Claude apps can also upload `pfte-translations.skill`, but the skill only works where the app can start the browser connection on your machine.
+Any agent that reads Agent Skills and runs local MCP servers can use the package. Install the skill with the [`skills` CLI](https://github.com/vercel-labs/skills), which knows the skills folder of Cursor, Gemini CLI, OpenCode, Windsurf and many more; leave out `--agent` to pick from the agents it finds on your machine:
+
+```bash
+npx skills add IceFireStudios/pointfire-ai-skills --skill pfte-translations --global
+```
+
+Or put the `pfte-translations` folder from the zip in the agent's skills folder yourself. Then add the browser connection with the command and arguments above. The Claude apps can also upload `pfte-translations.skill`, but the skill only works where the app can start the browser connection on your machine.
 
 ## The first time: sign in
 
@@ -135,9 +156,15 @@ claude plugin update pfte-translations@pointfire
 
 Restart Claude Code to load the new version.
 
-### OpenAI Codex and GitHub Copilot
+### OpenAI Codex, GitHub Copilot and other AI tools
 
-Download the new `pfte-translations.zip` from the [latest release](https://github.com/IceFireStudios/pointfire-ai-skills/releases/latest), and unzip it over the existing folder (`~/.agents/skills/` or `~/.copilot/skills/`). Start a new session.
+When you installed with the `skills` CLI:
+
+```bash
+npx skills update pfte-translations --global
+```
+
+Otherwise, download the new `pfte-translations.zip` from the [latest release](https://github.com/IceFireStudios/pointfire-ai-skills/releases/latest), and unzip it over the existing folder (`~/.agents/skills/` or `~/.copilot/skills/`). Start a new session.
 
 When the changelog says the `chrome-devtools-mcp` version changed, update the version in your browser connection too. For Codex, run `codex mcp remove pointfire-browser` and add it again with the new command.
 
@@ -153,8 +180,8 @@ When the changelog says the `chrome-devtools-mcp` version changed, update the ve
 | AI tool | Steps |
 |---|---|
 | Claude Code | `claude plugin uninstall pfte-translations@pointfire`, then `claude plugin marketplace remove pointfire` |
-| OpenAI Codex | Delete `~/.agents/skills/pfte-translations`, run `codex mcp remove pointfire-browser`, and delete `~/.pfte` |
-| GitHub Copilot | Delete `~/.copilot/skills/pfte-translations`, remove `pointfire-browser` from the MCP configuration, and delete `~/.pfte` |
+| OpenAI Codex | Run `npx skills remove pfte-translations --global` or delete `~/.agents/skills/pfte-translations`, run `codex mcp remove pointfire-browser`, and delete `~/.pfte` |
+| GitHub Copilot | Run `npx skills remove pfte-translations --global` or delete `~/.copilot/skills/pfte-translations`, remove `pointfire-browser` from the MCP configuration, and delete `~/.pfte` |
 
 ## Troubleshooting
 

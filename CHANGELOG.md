@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.1] - 2026-10-15
+
+- Install, update and remove the skill with the [`skills` CLI](https://github.com/vercel-labs/skills) (`npx skills add IceFireStudios/pointfire-ai-skills`) in OpenAI Codex, GitHub Copilot and other AI tools
+- The Release workflow checks that the `skills` CLI finds the skill
+
 ## [0.1.0] - 2026-10-12
 
 - First version of the `pfte-translations` skill: list the languages of a SharePoint site, check the translation status of a page or document, translate it, and find the pages with outdated translations, through the PointFire Translator Express tools on the page

@@ -1,7 +1,7 @@
 {
   "name": "pfte-translations",
   "displayName": "PointFire Translator Express",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Translate SharePoint pages and documents, and find missing or outdated translations, through PointFire Translator Express in a Chrome window the agent drives",
   "author": {
     "name": "IceFire Studios",
